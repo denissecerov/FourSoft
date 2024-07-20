@@ -1,0 +1,34 @@
+
+//alert("Welcome to my Website!");
+
+
+console.log("Welcome to my Website!");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
