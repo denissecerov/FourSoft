@@ -17,7 +17,7 @@ def home(request):
                 return redirect('dashboard')
             else:
                 form.add_error(None, "Invalid username or password")
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'dashboard.html', {'form': form})
 
 def register(request):
     form = CreateUserForm()

@@ -1,0 +1,129 @@
+/* styles.css */
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1em;
+    width: 100%;
+    text-align: center;
+}
+
+main {
+    width: 90%;
+    max-width: 600px;
+    background-color: white;
+    padding: 2em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 2em;
+    border-radius: 5px;
+}
+
+#task-list {
+    margin-bottom: 2em;
+}
+
+#task-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#task-list li {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#task-list input[type="checkbox"] {
+    margin-right: 1em;
+}
+
+#task-list .task-time {
+    margin-left: 1em;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.delete-btn {
+    margin-left: auto;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+#add-task form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#add-task input[type="text"],
+#add-task input[type="datetime-local"],
+#add-task select {
+    flex-grow: 1;
+    padding: 0.5em;
+    margin-right: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+#add-task button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#add-task button:hover {
+    background-color: #45a049;
+}
+
+
+
+
+
+
+
+

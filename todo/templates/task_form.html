@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<body>
+    <header>
+        <h1>Task Manager</h1>
+    </header>
+    <main>
+        <section id="task-list">
+            <h2>My Tasks</h2>
+            <ul id="tasks">
+                <!-- Tasks will be dynamically added here -->
+            </ul>
+        </section>
+        <section id="add-task">
+            <h2>Add New Task</h2>
+            <form id="task-form">
+                <input type="text" id="new-task" placeholder="Enter new task" required>
+                <input type="datetime-local" id="task-time" required>
+                <label for="recurring">Recurring:</label>
+                <select id="recurring" required>
+                    <option value="none">None</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+                <button type="submit">Add Task</button>
+            </form>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
+{% endblock %}
+
