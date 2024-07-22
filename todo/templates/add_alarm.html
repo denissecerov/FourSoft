@@ -1,0 +1,16 @@
+<head>
+    <title>Add Alarm</title>
+</head>
+<body>
+    <h1>Add Alarm</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_time">Time:</label>
+        <input type="time" id="id_time" name="time">
+        <br>
+        <button type="submit" style="margin-top: 1em;">Set Alarm</button>
+    </form>
+    <div>
+        <a class="btn btn-danger mb-3" href="{% url 'alarm_list' %}">Back to Alarm List</a>
+    </div>
+</body>
