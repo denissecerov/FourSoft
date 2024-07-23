@@ -1,6 +1,7 @@
 
 import os
 from pathlib import Path
+from django.core.mail.backends.smtp import EmailBackend
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,14 +11,18 @@ SECRET_KEY = 'your-secret-key'
 DEBUG = True
 ALLOWED_HOSTS = []
 
-# Email Backend
+# Mailersend configuration
+MAILERSEND_API_KEY = 'mlsn.502f1a0121abacfde40dcf0bd06ee6bab9c1d8bfbd495064ee30e0a004a5771c'
+
+DEFAULT_FROM_EMAIL = 'MS_7Fgslr@trial-3vz9dlewq7nlkj50.mlsender.net'
+SERVER_EMAIL = 'MS_7Fgslr@trial-3vz9dlewq7nlkj50.mlsender.net'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587  
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'foursoftfoursoft@gmail.com'
-EMAIL_HOST_PASSWORD = 'imohfsfnimfllgzf' # App Password
+EMAIL_HOST = 'smtp.mailersend.net'
+EMAIL_PORT = 587  # MailerSend SMTP port
+EMAIL_USE_TLS = True  # TLS is required for MailerSend SMTP
+EMAIL_HOST_USER = 'MS_7Fgslr@trial-3vz9dlewq7nlkj50.mlsender.net'
+EMAIL_HOST_PASSWORD = 'rj1qnsef1hnMhgVj'
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -28,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'todo',  # Your app
+    "anymail",
 ]
 
 MIDDLEWARE = [

@@ -7,14 +7,21 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from .models import Alarm
-from django.urls import reverse
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail
 from django.utils import timezone
 from .models import Alarm
 import threading
 from datetime import datetime
 import pytz
 from taskly.settings import EMAIL_HOST_USER
+from django.conf import settings
+from celery import shared_task
+from .forms import EmailComposeForm
+from django.contrib import messages
+from django.core.mail import send_mail
+
+# Mailersend configuration
+MAILERSEND_API_KEY = 'mlsn.a2603888ea8129816a8e00e7adf257422f1cc086b284d3eacfa9f7b87a32525a'
 
 def home(request):
     return render(request, 'home.html')
@@ -81,50 +88,27 @@ def user_logout(request):
 
 def alarm_list(request):
     alarms = Alarm.objects.all()
-    return render(request, 'alarm_list.html', {'alarms': alarms})
-
-def add_alarm(request):
-    if request.method == 'POST':
-        time = request.POST['time']
-        alarm = Alarm.objects.create(time=time)
-        alarm_time = datetime.strptime(time, "%H:%M").time()
-
-        # Schedule sending email at the specified time
-        schedule_email(alarm.pk, alarm_time)
-
-        return redirect('alarm_list')
-    return render(request, 'add_alarm.html')
+    return render(request, 'task_form.html', {'alarms': alarms})
 
 def delete_alarm(request, pk):
     alarm = Alarm.objects.get(pk=pk)
     alarm.delete()
     return redirect('alarm_list')
 
-def set_email(request):
+
+def send_mail(request):
     if request.method == 'POST':
-        time = request.POST.get("time")
-        print(f"Time is: {time}")
+        try:
+            subject = 'a Task is coming up!'
+            message = 'You have an event coming up.'
+            from_email = 'MS_7Fgslr@trial-3vz9dlewq7nlkj50.mlsender.net'
+            recipient_list = ['foursoftfoursoft@gmail.com']
 
-def send_alarm_email(alarm_id):
-    alarm = Alarm.objects.get(pk=alarm_id)
-    subject = 'Alarm Notification'
-    message = f'Your alarm is set for {alarm.time.strftime("%I:%M %p")}.'
-    from_email = EMAIL_HOST_USER
-    to_email = ['foursoftfoursoft@gmail.com']
+            send_mail(subject, message, from_email, recipient_list)
 
-    print(f'alarm is: {alarm}')
-    send_mail(subject, message, from_email, to_email, fail_silently=True)
-    return HttpResponse('Email sent successfully')
+            messages.success(request, 'Email sent successfully!')
+        except Exception as e:
+            messages.error(request, f'Failed to send email: {str(e)}')
+            return render(request, 'email_not_sent.html')
 
-def schedule_email(alarm_id, alarm_time):
-    utc = pytz.UTC
-    current_time = timezone.now()
-    alarm_datetime = datetime.combine(timezone.now().date(), alarm_time)
-    alarm_datetime = utc.localize(alarm_datetime)
-    if alarm_datetime < current_time:
-        return  # If the alarm time is in the past, do not schedule the email
-
-    seconds_until_alarm = (alarm_datetime - timezone.now()).total_seconds()
-    threading.Timer(seconds_until_alarm, send_alarm_email, args=[alarm_id]).start()
-
-
+    return render(request, 'email_not_scheduled.html')
