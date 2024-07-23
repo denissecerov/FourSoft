@@ -1,8 +1,27 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import CreateUserForm, LoginForm, TaskForm
 from .models import Task
+from django.shortcuts import render
+from django.http import HttpResponse
+
+from .models import Alarm
+from django.core.mail import send_mail
+from django.utils import timezone
+from .models import Alarm
+import threading
+from datetime import datetime
+import pytz
+from taskly.settings import EMAIL_HOST_USER
+from django.conf import settings
+from celery import shared_task
+from .forms import EmailComposeForm
+from django.contrib import messages
+from django.core.mail import send_mail
+
+# Mailersend configuration
+MAILERSEND_API_KEY = 'mlsn.a2603888ea8129816a8e00e7adf257422f1cc086b284d3eacfa9f7b87a32525a'
 
 def home(request):
     return render(request, 'home.html')
@@ -66,3 +85,30 @@ def delete_task(request, pk):
 def user_logout(request):
     logout(request)
     return redirect('home')
+
+def alarm_list(request):
+    alarms = Alarm.objects.all()
+    return render(request, 'task_form.html', {'alarms': alarms})
+
+def delete_alarm(request, pk):
+    alarm = Alarm.objects.get(pk=pk)
+    alarm.delete()
+    return redirect('alarm_list')
+
+
+def send_mail(request):
+    if request.method == 'POST':
+        try:
+            subject = 'a Task is coming up!'
+            message = 'You have an event coming up.'
+            from_email = 'MS_7Fgslr@trial-3vz9dlewq7nlkj50.mlsender.net'
+            recipient_list = ['foursoftfoursoft@gmail.com']
+
+            send_mail(subject, message, from_email, recipient_list)
+
+            messages.success(request, 'Email sent successfully!')
+        except Exception as e:
+            messages.error(request, f'Failed to send email: {str(e)}')
+            return render(request, 'email_not_sent.html')
+
+    return render(request, 'email_not_scheduled.html')

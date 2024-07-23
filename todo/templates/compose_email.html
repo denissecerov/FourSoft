@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compose Email</title>
+</head>
+<body>
+    <h2>Compose Email</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send Email</button>
+    </form>
+</body>
+</html>

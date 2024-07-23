@@ -12,7 +12,8 @@
         </section>
         <section id="add-task">
             <h2>Add New Task</h2>
-            <form id="task-form">
+            <form id="task-form" method="POST" action="{% url 'send_mail' %}">
+                {% csrf_token %}
                 <input type="text" id="new-task" placeholder="Enter new task" required>
                 <input type="datetime-local" id="task-time" required>
                 <label for="recurring">Recurring:</label>

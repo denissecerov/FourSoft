@@ -1,0 +1,17 @@
+<!-- send_email.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule Email</title>
+</head>
+<body>
+    <h2>Schedule Email</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="id_send_time">Send Time:</label>
+        <input type="datetime-local" id="id_send_time" name="send_time" required>
+        <button type="submit">Schedule Email</button>
+    </form>
+</body>
+</html>
